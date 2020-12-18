@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>七牛分片上传 | 阿霖博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天说下七牛云的分片上传项目中我们自己项目如果遇到大图片视频，等需要上传的项目会发现如果本地上传到自己服务器。第一会发现上传的视频过大有可能会出现响应终止的情况，第二会发现自己服务器上传了太多的媒体素材不好管理，第三图片还得自己手动压缩和视频截取封面图反正麻烦的一批七牛云的分片上传其实对前端的友好程度也不是多高，但是他便宜啊。接下来就看下七牛分片上传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="七牛分片上传">
+<meta property="og:url" content="http://example.com/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="阿霖博客">
+<meta property="og:description" content="今天说下七牛云的分片上传项目中我们自己项目如果遇到大图片视频，等需要上传的项目会发现如果本地上传到自己服务器。第一会发现上传的视频过大有可能会出现响应终止的情况，第二会发现自己服务器上传了太多的媒体素材不好管理，第三图片还得自己手动压缩和视频截取封面图反正麻烦的一批七牛云的分片上传其实对前端的友好程度也不是多高，但是他便宜啊。接下来就看下七牛分片上传">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-30T02:56:08.000Z">
+<meta property="article:modified_time" content="2020-12-18T03:45:15.901Z">
+<meta property="article:author" content="LiDaoLin">
+<meta property="article:tag" content="七牛">
+<meta property="article:tag" content="服务端">
+<meta property="article:tag" content="第三方">
+<meta property="article:tag" content="上传">
+<meta property="article:tag" content="后台">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="阿霖博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo" target="_blank" href="#" title="weibo">weibo</a>
+                            
+                                <a class="fl google" target="_blank" href="#" title="google">google</a>
+                            
+                                <a class="fl twitter" target="_blank" href="#" title="twitter">twitter</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/element-%E5%B0%8F%E7%9F%A5%E8%AF%86/" style="font-size: 10px;">element 小知识</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/md/" style="font-size: 12.5px;">md</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/uni-app/" style="font-size: 12.5px;">uni-app</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 10px;">vue-cli</a> <a href="/tags/vue-config/" style="font-size: 10px;">vue-config</a> <a href="/tags/webApp/" style="font-size: 10px;">webApp</a> <a href="/tags/%E4%B8%83%E7%89%9B/" style="font-size: 10px;">七牛</a> <a href="/tags/%E4%B8%8A%E4%BC%A0/" style="font-size: 10px;">上传</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 10px;">其他</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 15px;">博客</a> <a href="/tags/%E5%90%8E%E5%8F%B0/" style="font-size: 10px;">后台</a> <a href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" style="font-size: 15px;">小知识</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12.5px;">小程序</a> <a href="/tags/%E5%B8%B8%E7%94%A8/" style="font-size: 10px;">常用</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">插件</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF/" style="font-size: 10px;">服务端</a> <a href="/tags/%E7%94%B5%E8%84%91/" style="font-size: 12.5px;">电脑</a> <a href="/tags/%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C/" style="font-size: 12.5px;">电脑操作</a> <a href="/tags/%E7%9B%B4%E6%92%AD/" style="font-size: 10px;">直播</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/" style="font-size: 10px;">移动端</a> <a href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9/" style="font-size: 10px;">第三方</a> <a href="/tags/%E7%BB%84%E4%BB%B6/" style="font-size: 12.5px;">组件</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 12.5px;">语法</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 17.5px;">配置</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">在程序员的道路上,让人头秃,web前端开发工程师。现于合肥工作想有所成长发展</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=PAkNDgsKBQ4MCnxNTRJfU1E" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+                    
+                        <a class="google" target="_blank" href="#" title="google">google</a>
+                    
+                        <a class="twitter" target="_blank" href="#" title="twitter">twitter</a>
+                    
+                        <a class="linkedin" target="_blank" href="#" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-七牛分片上传" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" class="article-date">
+      <time datetime="2020-11-30T02:56:08.000Z" itemprop="datePublished">2020-11-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      七牛分片上传
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a><a class="article-category-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E7%AC%AC%E4%B8%89%E6%96%B9/">第三方</a><a class="article-category-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E7%AC%AC%E4%B8%89%E6%96%B9/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/">图片上传</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%83%E7%89%9B/" rel="tag">七牛</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%8A%E4%BC%A0/" rel="tag">上传</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8E%E5%8F%B0/" rel="tag">后台</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF/" rel="tag">服务端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9/" rel="tag">第三方</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="今天说下七牛云的分片上传"><a href="#今天说下七牛云的分片上传" class="headerlink" title="今天说下七牛云的分片上传"></a>今天说下七牛云的分片上传</h1><p>项目中我们自己项目如果遇到大图片视频，等需要上传的项目会发现如果本地上传到自己服务器。<br>第一会发现上传的视频过大有可能会出现响应终止的情况，第二会发现自己服务器上传了太多的媒体素材不好管理，第三图片还得自己手动压缩和视频截取封面图反正麻烦的一批<br>七牛云的分片上传其实对前端的友好程度也不是多高，但是他便宜啊。接下来就看下七牛分片上传</p>
+<a id="more"></a>
+<p>七牛上传有点坑爹他没有自己的上传代码，他使用的是Plupload上传组件就是说用七牛上传最好使用Plupload进行数据流上传<br>七牛云上传使用方式有两种一种是用<code>&lt;script&gt;</code>引入一个是使用vue中npm安装js包进行</p>
+<h2 id="七牛云上传进行script引入模式"><a href="#七牛云上传进行script引入模式" class="headerlink" title="七牛云上传进行script引入模式"></a>七牛云上传进行script引入模式</h2><p>无需npm install安装</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.staticfile.org/plupload/2.1.9/plupload.full.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://www.lidaolin.com/demo/qiniu.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>引入后就可以在vue文件中使用了这种使用方式比较简单点<br>参考<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020534202">vue+七牛云上传视频文件</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">toDecimal (size) &#123;</span><br><span class="line">  size = size / <span class="number">1024</span> / <span class="number">1024</span></span><br><span class="line">  <span class="keyword">var</span> f = <span class="built_in">parseFloat</span>(size)</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">isNaN</span>(f)) &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  f = <span class="built_in">Math</span>.round(size * <span class="number">10</span>) / <span class="number">10</span></span><br><span class="line">  <span class="keyword">var</span> s = f.toString()</span><br><span class="line">  <span class="keyword">var</span> rs = s.indexOf(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> (rs &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    rs = s.length</span><br><span class="line">    s += <span class="string">&#x27;.&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (s.length &lt;= rs + <span class="number">1</span>) &#123;</span><br><span class="line">    s += <span class="string">&#x27;0&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> s</span><br><span class="line">&#125;,</span><br><span class="line">initUploader () &#123;</span><br><span class="line"><span class="comment">//   let plupload = window.plupload</span></span><br><span class="line"><span class="comment">//   let Qiniu = global.Qiniu</span></span><br><span class="line">  <span class="keyword">let</span> _this = <span class="built_in">this</span></span><br><span class="line">  <span class="comment">// domain为七牛空间对应的域名，选择某个空间后，可通过 空间设置-&gt;基本设置-&gt;域名设置 查看获取</span></span><br><span class="line"><span class="comment">//   let isIphone5 = this.phoneType === &#x27;5&#x27;</span></span><br><span class="line">  <span class="comment">// uploader为一个plupload对象，继承了所有plupload的方法</span></span><br><span class="line">  <span class="built_in">this</span>.uploader = Qiniu.uploader(&#123;</span><br><span class="line">    runtimes: <span class="string">&#x27;html5,flash,html4&#x27;</span>, <span class="comment">// 上传模式，依次退化</span></span><br><span class="line">    browse_button: <span class="string">&#x27;pickfiles&#x27;</span>, <span class="comment">// 上传选择的点选按钮，必需</span></span><br><span class="line">    uptoken: <span class="built_in">this</span>.token, <span class="comment">// uptoken是上传凭证，由其他程序生成，后台获取后存在data里</span></span><br><span class="line">    <span class="comment">// uptoken_url: &quot;http://api.lidaolin.com/upload/getuptoken&quot;, //后端获取token的url</span></span><br><span class="line">    get_new_uptoken: <span class="literal">true</span>, <span class="comment">// 设置上传文件的时候是否每次都重新获取新的uptoken项目不大建议关闭，没啥用</span></span><br><span class="line">    bucket_name: <span class="string">&#x27;common-web&#x27;</span>, <span class="comment">// 空间名</span></span><br><span class="line">    unique_names: <span class="literal">false</span>, <span class="comment">// 默认false，key为文件名。若开启该选项，JS-SDK会为每个文件自动生成key（文件名）</span></span><br><span class="line">    save_key: <span class="literal">false</span>, <span class="comment">// 默认false。若在服务端生成uptoken的上传策略中指定了sava_key，则开启，SDK在前端将不对key进行任何处理</span></span><br><span class="line">    domain: <span class="string">&#x27;https://xxx.com&#x27;</span>, <span class="comment">// bucket domain eg:http://qiniu-plupload.qiniudn.com/  //自己在七牛的的域名</span></span><br><span class="line">    container: <span class="string">&#x27;video_container&#x27;</span>, <span class="comment">// 上传区域DOM ID，默认是browser_button的父元素</span></span><br><span class="line">    max_file_size: <span class="string">&#x27;10mb&#x27;</span>, <span class="comment">// 最大文件体积限制</span></span><br><span class="line">    dragdrop: <span class="literal">false</span>, <span class="comment">// 开启可拖曳上传</span></span><br><span class="line">    drop_element: <span class="string">&#x27;video_container&#x27;</span>, <span class="comment">// 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传</span></span><br><span class="line">    chunk_size: <span class="string">&#x27;4mb&#x27;</span>, <span class="comment">// 分块上传时，每块的体积</span></span><br><span class="line">    max_retries: <span class="number">3</span>, <span class="comment">// 上传失败最大重试次数</span></span><br><span class="line">    auto_start: <span class="literal">true</span>, <span class="comment">// 选择文件后自动上传，若关闭需要自己绑定事件触发上传</span></span><br><span class="line">    multi_selection: !isIphone5,</span><br><span class="line">    init: &#123;</span><br><span class="line">      Key: <span class="function"><span class="keyword">function</span> (<span class="params">up, files</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _this.filename</span><br><span class="line">      &#125;,</span><br><span class="line">      FilesAdded: <span class="function"><span class="keyword">function</span> (<span class="params">up, files</span>) </span>&#123;</span><br><span class="line">        plupload.each(files, <span class="function"><span class="keyword">function</span> (<span class="params">file</span>) </span>&#123;</span><br><span class="line">          <span class="comment">// 文件添加进队列后，处理相关的事情</span></span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&#x27;FilesAdded&#x27;</span>)</span><br><span class="line">          _this.fileSize = _this.toDecimal(file.size)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line">      BeforeUpload: <span class="function"><span class="keyword">function</span> (<span class="params">up, file</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;BeforeUpload&#x27;</span>)</span><br><span class="line">      &#125;,</span><br><span class="line">      ChunkUploaded: <span class="function"><span class="keyword">function</span> (<span class="params">up, file, info</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;ChunkUploaded&#x27;</span>)</span><br><span class="line">      &#125;,</span><br><span class="line">      UploadProgress: <span class="function"><span class="keyword">function</span> (<span class="params">up, file</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 每个文件上传时，处理相关的事情</span></span><br><span class="line">        _this.filePercent = <span class="built_in">parseInt</span>(file.percent)</span><br><span class="line">        _this.fileLoaded = plupload.formatSize(file.loaded).toUpperCase()</span><br><span class="line">        _this.fileSpeed = plupload.formatSize(file.speed).toUpperCase()</span><br><span class="line">      &#125;,</span><br><span class="line">      FileUploaded: <span class="function"><span class="keyword">function</span> (<span class="params">up, file, info</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;FileUploaded&#x27;</span>)</span><br><span class="line">        <span class="keyword">let</span> response = <span class="built_in">JSON</span>.parse(info.response)</span><br><span class="line">        _this.hash = response.hash</span><br><span class="line">        _this.resFileName = response.key</span><br><span class="line">        _this.coverPic = <span class="string">&#x27;https://xxx.com/&#x27;</span> + response.key + <span class="string">&#x27;?vframe/png/offset/7/w/480&#x27;</span></span><br><span class="line">      &#125;，</span><br><span class="line">      <span class="built_in">Error</span>: <span class="function"><span class="keyword">function</span> (<span class="params">up, err, errTip</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 上传出错时，处理相关的事情</span></span><br><span class="line">        _this.$toast(<span class="string">&#x27;Error =&#x27;</span>)</span><br><span class="line">        _this.$toast(err)</span><br><span class="line">        _this.$toast(<span class="string">&#x27;errTip =&#x27;</span>)</span><br><span class="line">        _this.$toast(errTip)</span><br><span class="line">      &#125;,</span><br><span class="line">      UploadComplete: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 队列文件处理完毕后，处理相关的事情</span></span><br><span class="line">        _this.$toast(<span class="string">&#x27;UploadComplete&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>另外种方法就比较麻烦先下载<br><code>npm install plupload -s</code><br>七牛云上传主要是用的plupload上传机制下面的当我没说只是有这个理念没试验过，我现在没空<br>参考文献 <a target="_blank" rel="noopener" href="https://blog.csdn.net/jiangwei1994/article/details/88799258">vue+element+plupload上传图片组件</a><a target="_blank" rel="noopener" href="https://cnpmjs.org/package/vue-plupload-aj">vue-plupload-aj
+</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/playboyanta123/article/details/82745824">在vue中使用plupload上传图片到七牛(着重解决moxie is not defined问题)</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/2050/p/3913184.html">前端上传组件Plupload使用指南</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/2050/p/3913184.html">前端上传组件Plupload使用指南</a><br>反正我现在不想弄了如果想弄自己看看吧，结果发现贼麻烦没遇到需求的时候我不会弄的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box-img&quot;</span>  <span class="attr">v-if</span>=<span class="string">&quot;fileType===1&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;a id=&quot;selectfiles&quot; href=&quot;javascript:void(0);&quot; class=&#x27;btn&#x27; onchange=&#x27;console.log(888)&#x27;&gt;选择文件&lt;/a&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;a id=&quot;postfiles&quot; href=&quot;javascript:void(0);&quot; class=&#x27;btn&#x27;&gt;开始上传&lt;/a&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box el-icon-circle-plus&quot;</span> <span class="attr">:id</span>=<span class="string">&quot;&#x27;selectfiles&#x27;+index&quot;</span>  @<span class="attr">dblclick.native</span>=<span class="string">&quot;alert(index)&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img_del el-icon-circle-close&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;Url!==&#x27;&#x27;&quot;</span> @<span class="attr">click.stop</span>=<span class="string">&quot;del(index)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;Url&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;Url!==null&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;jindu_box&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;jintu&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-progress</span> <span class="attr">type</span>=<span class="string">&quot;circle&quot;</span> <span class="attr">:percentage</span>=<span class="string">&quot;percentage&quot;</span> <span class="attr">color</span>=<span class="string">&quot;#67C23A&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;percentage!==100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-progress</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-progress</span> <span class="attr">type</span>=<span class="string">&quot;circle&quot;</span> <span class="attr">:percentage</span>=<span class="string">&quot;percentage&quot;</span> <span class="attr">status</span>=<span class="string">&quot;success&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;percentage===100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-progress</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img_name&quot;</span>  <span class="attr">v-if</span>=<span class="string">&quot;fileType===1&quot;</span>&gt;</span></span><br><span class="line">      &#123;&#123;name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;file-box&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;fileType!==1&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        &#123;&#123;Url===&#x27;&#x27;?&#x27;请选择文件&#x27;:pushName&#125;&#125;</span><br><span class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;jintu&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-progress</span> <span class="attr">:percentage</span>=<span class="string">&quot;percentage&quot;</span> <span class="attr">color</span>=<span class="string">&quot;#67C23A&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;percentage!==100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-progress</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-progress</span> <span class="attr">:percentage</span>=<span class="string">&quot;percentage&quot;</span> <span class="attr">status</span>=<span class="string">&quot;success&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;percentage===100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-progress</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">:id</span>=<span class="string">&quot;&#x27;selectfiles&#x27;+index&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123;Url===&#x27;&#x27;?&#x27;选择文件&#x27;:&#x27;重新选择&#x27;&#125;&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;Url!==&#x27;&#x27;&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;inspect(Url)&quot;</span>&gt;</span></span><br><span class="line">        检查</span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> <span class="string">&#x27;@/utils/crypto1/crypto/crypto.js&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> <span class="string">&#x27;@/utils/crypto1/hmac/hmac.js&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> <span class="string">&#x27;@/utils/crypto1/sha1/sha1.js&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> Base64 <span class="keyword">from</span> <span class="string">&#x27;@/utils/base64.js&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">import</span> plupload <span class="keyword">from</span> <span class="string">&#x27;plupload&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="comment">// sougegeshe // sougematch</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> accessid = <span class="string">&#x27;LTAIShfs0pmAbRkb&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> accesskey = <span class="string">&#x27;qlx4Fp0yLI8fbA9zQmVIcPsCCdGBBh&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> host = <span class="string">&#x27;http://sougematch.oss-cn-beijing.aliyuncs.com&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> bucket = <span class="string">&#x27;image&#x27;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> g_dirname = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> g_object_name = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> g_object_name_type = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> timestamp</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> now = timestamp = <span class="built_in">Date</span>.parse(<span class="keyword">new</span> <span class="built_in">Date</span>()) / <span class="number">1000</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> pos = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> suffix = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> policyText = &#123;</span></span><br><span class="line"><span class="javascript">    <span class="string">&#x27;expiration&#x27;</span>: <span class="string">&#x27;2020-01-01T12:00:00.000Z&#x27;</span>, <span class="comment">// 设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了</span></span></span><br><span class="line"><span class="javascript">    <span class="string">&#x27;conditions&#x27;</span>: [</span></span><br><span class="line"><span class="javascript">      [<span class="string">&#x27;content-length-range&#x27;</span>, <span class="number">0</span>, <span class="number">1048576000</span>] <span class="comment">// 设置上传文件的大小限制</span></span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> policyBase64 = Base64.encode(<span class="built_in">JSON</span>.stringify(policyText))</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> message = policyBase64</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> bytes = Crypto.HMAC(Crypto.SHA1, message, accesskey, &#123;<span class="attr">asBytes</span>: <span class="literal">true</span>&#125;)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> signature = Crypto.util.bytesToBase64(bytes)</span></span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 选择上传名字是本地文件名字还是随机文件名字</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">check_object_radio</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    g_object_name_type = <span class="string">&#x27;random_name&#x27;</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 默认是上传到根目录</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">get_dirname</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    g_dirname = <span class="string">&#x27;image/&#x27;</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 获得随机的字符串</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">random_string</span> (<span class="params">len</span>) </span>&#123;</span></span><br><span class="line">    len = len || 32</span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> chars = <span class="string">&#x27;ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> maxPos = chars.length</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> pwd = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="javascript">      pwd += chars.charAt(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * maxPos))</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> pwd</span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 获取文件后缀</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">get_suffix</span> (<span class="params">filename</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    pos = filename.lastIndexOf(<span class="string">&#x27;.&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    suffix = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">    if (pos !== -1) &#123;</span><br><span class="line">      suffix = filename.substring(pos)</span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> suffix</span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 获取文件名字</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">calculate_object_name</span> (<span class="params">filename</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (g_object_name_type === <span class="string">&#x27;local_name&#x27;</span>) &#123;</span></span><br><span class="line">      g_object_name += filename</span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (g_object_name_type === <span class="string">&#x27;random_name&#x27;</span>) &#123;</span></span><br><span class="line">      suffix = get_suffix(filename)</span><br><span class="line"><span class="javascript">      g_object_name = random_string(<span class="number">10</span>) + <span class="keyword">new</span> <span class="built_in">Date</span>().getTime() + suffix</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">get_uploaded_object_name</span> (<span class="params">filename</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (g_object_name_type === <span class="string">&#x27;local_name&#x27;</span>) &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> tmp_name = g_object_name</span></span><br><span class="line">      tmp_name = tmp_name.replace(filename, filename)</span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> tmp_name</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (g_object_name_type === <span class="string">&#x27;random_name&#x27;</span>) &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> g_object_name</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="javascript">  <span class="comment">// 设置上传参数</span></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">set_upload_param</span> (<span class="params">up, filename, ret</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// g_object_name = g_dirname</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (filename !== <span class="string">&#x27;&#x27;</span>) &#123;</span></span><br><span class="line">      suffix = get_suffix(filename)</span><br><span class="line">      calculate_object_name(filename)</span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> new_multipart_params = &#123;</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;Filename&#x27;</span>: g_dirname + g_object_name,</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;key&#x27;</span>: g_dirname + g_object_name,</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;policy&#x27;</span>: policyBase64,</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;OSSAccessKeyId&#x27;</span>: accessid,</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;success_action_status&#x27;</span>: <span class="string">&#x27;200&#x27;</span>, <span class="comment">// 让服务端返回200,不然，默认会返回204</span></span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;signature&#x27;</span>: signature</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">    <span class="comment">// console.log(g_object_name)</span></span></span><br><span class="line">    up.setOption(&#123;</span><br><span class="line"><span class="javascript">      <span class="string">&#x27;url&#x27;</span>: host,</span></span><br><span class="line"><span class="javascript">      <span class="string">&#x27;multipart_params&#x27;</span>: new_multipart_params</span></span><br><span class="line">    &#125;)</span><br><span class="line">    up.start()</span><br><span class="line">  &#125;</span><br><span class="line"><span class="javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">    name: <span class="string">&#x27;ImgUpload&#x27;</span>,</span></span><br><span class="line">    data () &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// Url: null,</span></span></span><br><span class="line">        percentage: 0,</span><br><span class="line"><span class="javascript">        jintu: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        pushName:<span class="string">&#x27;&#x27;</span></span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    props: &#123;</span><br><span class="line">      name:&#123;</span><br><span class="line"><span class="javascript">        type: <span class="built_in">String</span>,</span></span><br><span class="line"><span class="javascript">        required: <span class="literal">true</span></span></span><br><span class="line">      &#125;,</span><br><span class="line">      fileType:&#123;</span><br><span class="line"><span class="javascript">        type: <span class="built_in">Number</span>,</span></span><br><span class="line"><span class="javascript">        required: <span class="literal">true</span></span></span><br><span class="line">      &#125;,</span><br><span class="line"><span class="javascript">      Url:<span class="built_in">String</span>,</span></span><br><span class="line">      type: &#123;</span><br><span class="line"><span class="javascript">        type: <span class="built_in">Number</span>,</span></span><br><span class="line"><span class="javascript">        <span class="keyword">default</span>:<span class="number">1</span></span></span><br><span class="line">      &#125;,</span><br><span class="line">      index: &#123;</span><br><span class="line"><span class="javascript">        type: <span class="built_in">Number</span>,</span></span><br><span class="line"><span class="javascript">        <span class="keyword">default</span>:<span class="number">0</span></span></span><br><span class="line">      &#125;,</span><br><span class="line"><span class="javascript">      add_img: <span class="built_in">Function</span>,</span></span><br><span class="line"><span class="javascript">      del_img:<span class="built_in">Function</span></span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      del (index) &#123;</span><br><span class="line"><span class="javascript">        <span class="comment">// alert(index)</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">this</span>.del_img(index)</span></span><br><span class="line">      &#125;,</span><br><span class="line">      inspect (url) &#123;</span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.open(url);</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted () &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> that = <span class="built_in">this</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">var</span> uploader = <span class="keyword">new</span> plupload.Uploader(&#123;</span></span><br><span class="line"><span class="javascript">        runtimes: <span class="string">&#x27;html5,flash,silverlight,html4&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        browse_button: <span class="string">&#x27;selectfiles&#x27;</span>+that.index,</span></span><br><span class="line"><span class="javascript">        multi_selection: <span class="literal">false</span>,</span></span><br><span class="line"><span class="javascript">        <span class="comment">// container: document.getElementById(&#x27;container&#x27;),</span></span></span><br><span class="line"><span class="javascript">        flash_swf_url: <span class="string">&#x27;./../assets/plupload-2.1.2/js/Moxie.swf&#x27;</span>,</span></span><br><span class="line"><span class="javascript">        silverlight_xap_url: <span class="string">&#x27;./../assets/plupload-2.1.2/js/Moxie.xap&#x27;</span>,</span></span><br><span class="line">        url: host,</span><br><span class="line"> </span><br><span class="line">        init: &#123;</span><br><span class="line"><span class="javascript">          PostInit: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span></span><br><span class="line"><span class="javascript">          QueueChanged: <span class="function"><span class="keyword">function</span> (<span class="params">up</span>) </span>&#123; <span class="comment">// 数组变化是发生</span></span></span><br><span class="line">          &#125;,</span><br><span class="line"><span class="javascript">          FileFiltered: <span class="function"><span class="keyword">function</span> (<span class="params">up, files</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> fileSize = (<span class="built_in">Math</span>.round(files.size * <span class="number">100</span> / (<span class="number">1024</span> * <span class="number">1024</span>)) / <span class="number">100</span>).toString() <span class="comment">// MB</span></span></span><br><span class="line">            if (fileSize &gt; 10) &#123;</span><br><span class="line">              uploader.removeFile(files)</span><br><span class="line"><span class="javascript">              that.$message.error(<span class="string">&#x27;文件不能大于10M&#x27;</span>)</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line"><span class="javascript">          FilesAdded: <span class="function"><span class="keyword">function</span> (<span class="params">up, files</span>) </span>&#123;</span></span><br><span class="line"> </span><br><span class="line"><span class="javascript">            set_upload_param(uploader, <span class="string">&#x27;&#x27;</span>, <span class="literal">false</span>)</span></span><br><span class="line">          &#125;,</span><br><span class="line"> </span><br><span class="line"><span class="javascript">          BeforeUpload: <span class="function"><span class="keyword">function</span> (<span class="params">up, file</span>) </span>&#123;</span></span><br><span class="line">            check_object_radio()</span><br><span class="line">            get_dirname()</span><br><span class="line"><span class="javascript">            set_upload_param(up, file.name, <span class="literal">true</span>)</span></span><br><span class="line">          &#125;,</span><br><span class="line"> </span><br><span class="line"><span class="javascript">          UploadProgress: <span class="function"><span class="keyword">function</span> (<span class="params">up, file</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(file.percent, 123123) // 进度条设置</span></span></span><br><span class="line"><span class="javascript">            that.jintu = <span class="literal">true</span></span></span><br><span class="line">            that.percentage = file.percent</span><br><span class="line">          &#125;,</span><br><span class="line"> </span><br><span class="line"><span class="javascript">          FileUploaded: <span class="function"><span class="keyword">function</span> (<span class="params">up, file, info</span>) </span>&#123;</span></span><br><span class="line">            if (info.status === 200) &#123;</span><br><span class="line">              that.$message(&#123;</span><br><span class="line"><span class="javascript">                message: <span class="string">&#x27;上传成功&#x27;</span>,</span></span><br><span class="line"><span class="javascript">                type: <span class="string">&#x27;success&#x27;</span></span></span><br><span class="line">              &#125;)</span><br><span class="line"><span class="javascript">              <span class="keyword">var</span> Url = host + <span class="string">&#x27;/&#x27;</span> + g_dirname + get_uploaded_object_name(file.name)</span></span><br><span class="line">              that.pushName = file.name</span><br><span class="line"><span class="javascript">              <span class="comment">// console.log(Url)</span></span></span><br><span class="line">              that.add_img(that.type, Url, that.index,that.fileType)</span><br><span class="line"><span class="javascript">              that.jintu = <span class="literal">false</span></span></span><br><span class="line">              that.percentage = 0</span><br><span class="line"><span class="javascript">            &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">              that.jintu = <span class="literal">false</span></span></span><br><span class="line">              that.percentage = 0</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line"> </span><br><span class="line"><span class="javascript">          <span class="built_in">Error</span>: <span class="function"><span class="keyword">function</span> (<span class="params">up, err</span>) </span>&#123;</span></span><br><span class="line"> </span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      uploader.init()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css">  <span class="selector-class">.uploadImg-main</span> &#123;</span></span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 130px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    float: left;</span><br><span class="line">    font-size: 14px;</span><br><span class="line"><span class="css">    <span class="selector-tag">color</span>: <span class="selector-id">#C0C4CC</span>;</span></span><br><span class="line">    line-height: 30px;</span><br><span class="line">    margin-right: 54px;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.uploadImg-main</span> <span class="selector-class">.uploadImg</span> &#123;</span></span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    position: relative;</span><br><span class="line">    font-size: 12px;</span><br><span class="line">    line-height: 20px;</span><br><span class="line"><span class="css">    <span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">dashed</span> <span class="selector-id">#C0C4CC</span>;</span></span><br><span class="line">    cursor: pointer;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.uploadImg-main</span> <span class="selector-class">.uploadImg</span> <span class="selector-tag">i</span> &#123;</span></span><br><span class="line">    font-size: 40px;</span><br><span class="line">    line-height: 70px</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.uploadImg-main</span> <span class="selector-class">.uploadImg</span> <span class="selector-tag">input</span> &#123;</span></span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    left: 0;</span><br><span class="line">    top: 0;</span><br><span class="line"><span class="css">    <span class="selector-tag">filter</span>: <span class="selector-tag">alpha</span>(<span class="selector-tag">opacity</span><span class="selector-pseudo">:0)</span>;</span></span><br><span class="line">    opacity: 0;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.uploadImg-main</span> <span class="selector-class">.uploadImg</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    left: 0;</span><br><span class="line">    top: 0;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.box</span> &#123;</span></span><br><span class="line">    width: 130px;</span><br><span class="line">    height: 130px;</span><br><span class="line"><span class="css">    <span class="selector-tag">background</span>: <span class="selector-id">#F9F9F9</span>;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">color</span>: <span class="selector-id">#D8D8D8</span>;</span></span><br><span class="line">    text-align: center;</span><br><span class="line">    line-height: 130px;</span><br><span class="line">    font-size: 28px;</span><br><span class="line"><span class="css">    <span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#D8D8D8</span>;</span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"><span class="css">  <span class="selector-class">.box</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line">    display: block;</span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 0;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="css">  <span class="selector-class">.box-img</span>&#123;</span></span><br><span class="line">    width: 130px;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="css">  <span class="selector-class">.img_name</span>&#123;</span></span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 16px;</span><br><span class="line">    line-height: 16px;</span><br><span class="line">    font-size: 14px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    margin-top: 15px;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="css">  <span class="selector-class">.jindu_box</span>&#123;</span></span><br><span class="line">    width: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 0;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="css">  <span class="selector-class">.img_del</span>&#123;</span></span><br><span class="line">    position: absolute;</span><br><span class="line">    width: 20px;</span><br><span class="line">    height: 20px;</span><br><span class="line"><span class="css">    <span class="selector-tag">color</span>: <span class="selector-id">#989898</span>;</span></span><br><span class="line">    top: 5px;</span><br><span class="line">    right: 5px;</span><br><span class="line">    z-index: 111;</span><br><span class="line">    font-size: 20px;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="css">  <span class="selector-class">.file-box</span>&#123;</span></span><br><span class="line">    width: 100%;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>写着玩做笔记</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">小编不易来个几毛也是钱</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">七牛分片上传</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 霖 的个人博客">霖</a></p>
+        <p><span>发布时间:</span>2020年11月30日 - 10时56分</p>
+        <p><span>最后更新:</span>2020年12月18日 - 11时45分 </p>
+<!--        <p>-->
+<!--            <span>原始链接:</span><a class="post-url" href="/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/" title="七牛分片上传">http://example.com/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/</a>-->
+<!--            <span class="copy-path" data-clipboard-text="原文: http://example.com/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>-->
+<!--            <script src="/js/clipboard.min.js"></script>-->
+<!--            <script> var clipboard = new Clipboard('.copy-path'); </script>-->
+<!--        </p>-->
+<!--        <p>-->
+<!--            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。-->
+<!--        </p>-->
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/12/01/%E5%8E%BB%E6%8E%89%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          uniapp去掉顶部导航栏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/30/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E9%94%AE%E7%9B%98%E9%A1%B6%E5%87%BA%E9%A1%B5%E9%9D%A2%E5%BC%82%E5%B8%B8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">移动端页面键盘顶出页面异常</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8A%E5%A4%A9%E8%AF%B4%E4%B8%8B%E4%B8%83%E7%89%9B%E4%BA%91%E7%9A%84%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0"><span class="toc-number">1.</span> <span class="toc-text">今天说下七牛云的分片上传</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E7%89%9B%E4%BA%91%E4%B8%8A%E4%BC%A0%E8%BF%9B%E8%A1%8Cscript%E5%BC%95%E5%85%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">七牛云上传进行script引入模式</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'luuman',
+      repo: 'lidaolin.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/12/01/%E5%8E%BB%E6%8E%89%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/" title="上一篇: uniapp去掉顶部导航栏">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2020/11/30/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E9%94%AE%E7%9B%98%E9%A1%B6%E5%87%BA%E9%A1%B5%E9%9D%A2%E5%BC%82%E5%B8%B8/" title="下一篇: 移动端页面键盘顶出页面异常">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/12/04/watch%E7%9B%91%E6%8E%A7/">watch监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/03/element%E5%BC%B9%E7%AA%97/">element的$msgbox弹窗带图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/02/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%85%A5%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9B%B4%E6%92%AD/">小程序接入小程序直播</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/01/%E5%8E%BB%E6%8E%89%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/">uniapp去掉顶部导航栏</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">七牛分片上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/30/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E9%94%AE%E7%9B%98%E9%A1%B6%E5%87%BA%E9%A1%B5%E9%9D%A2%E5%BC%82%E5%B8%B8/">移动端页面键盘顶出页面异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%80%8E%E4%B9%88%E9%95%BF%E4%B9%85%E8%BF%90%E8%A1%8Cnode%E9%A1%B9%E7%9B%AE/">服务器上怎么长久运行node项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/cmd%E6%93%8D%E4%BD%9C/">cmd操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E5%B8%B8%E7%94%A8%E5%8F%88%E4%B8%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0/">常用又不常用的函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/vue%E5%89%AA%E5%88%87%E6%9D%BF%E4%B8%80%E9%94%AE%E5%A4%8D%E5%88%B6/">vue剪切板一键复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/vue%E7%9A%84%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E4%B8%8D%E6%98%AF%E6%A0%B9%E7%9B%AE%E5%BD%95%E9%97%AE%E9%A2%98/">vue的打包发布不是根目录问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/18/vue%E7%88%B6%E5%AD%90%E4%BC%A0%E5%80%BC/">vue父子传值</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/win7%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%A4%B9/">电脑隐藏文件夹</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/%E5%AD%97%E4%BD%93%E8%B6%85%E5%87%BA%E9%9A%90%E8%97%8F/">字体超出隐藏</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/markdown%E8%AF%AD%E6%B3%95/">markdown语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/gitNew/">git的使用与命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/hexo/">新建博客-hexo搭建简单博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2/">新建博客-平台</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2020 LiDaoLin
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访人数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
