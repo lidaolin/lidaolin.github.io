@@ -4734,6 +4734,14 @@ pre .link_url {
   height: 100%;
   overflow: hidden;
 }
+.youyan {
+  padding: 20px 40px;
+}
+@media (max-width: 767px) {
+  .youyan {
+    padding: 20px 10px;
+  }
+}
 .inner1 {
   margin: 0 40px;
 }

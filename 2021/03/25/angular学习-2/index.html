@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>angular学习-2 | 阿霖博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="angular学习的第二课">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular学习-2">
+<meta property="og:url" content="http://example.com/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/index.html">
+<meta property="og:site_name" content="阿霖博客">
+<meta property="og:description" content="angular学习的第二课">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-25T02:06:09.000Z">
+<meta property="article:modified_time" content="2021-03-29T06:25:47.800Z">
+<meta property="article:author" content="LiDaoLin">
+<meta property="article:tag" content="angular">
+<meta property="article:tag" content="框架">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="阿霖博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/works">作品展示</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=JB0QFBEcFRwdEmRVVQpHS0k" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                            
+                                <a class="fl QQ" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=940581896&site=qq&menu=yes" title="QQ">QQ</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/H5/" style="font-size: 12.5px;">H5</a> <a href="/tags/angular/" style="font-size: 15px;">angular</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/directives/" style="font-size: 10px;">directives</a> <a href="/tags/element/" style="font-size: 17.5px;">element</a> <a href="/tags/element-directives/" style="font-size: 10px;">element directives</a> <a href="/tags/element-%E5%B0%8F%E7%9F%A5%E8%AF%86/" style="font-size: 10px;">element 小知识</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/input/" style="font-size: 10px;">input</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/md/" style="font-size: 12.5px;">md</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/pc/" style="font-size: 10px;">pc</a> <a href="/tags/region/" style="font-size: 10px;">region</a> <a href="/tags/router/" style="font-size: 12.5px;">router</a> <a href="/tags/uni-app/" style="font-size: 12.5px;">uni-app</a> <a href="/tags/uniApp/" style="font-size: 10px;">uniApp</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 12.5px;">vue-cli</a> <a href="/tags/vue-config/" style="font-size: 10px;">vue-config</a> <a href="/tags/vue-router/" style="font-size: 12.5px;">vue-router</a> <a href="/tags/vuex/" style="font-size: 10px;">vuex</a> <a href="/tags/webApp/" style="font-size: 10px;">webApp</a> <a href="/tags/%E4%B8%83%E7%89%9B/" style="font-size: 10px;">七牛</a> <a href="/tags/%E4%B8%8A%E4%BC%A0/" style="font-size: 12.5px;">上传</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 10px;">其他</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 15px;">博客</a> <a href="/tags/%E5%90%8E%E5%8F%B0/" style="font-size: 10px;">后台</a> <a href="/tags/%E5%9F%BA%E6%93%8D/" style="font-size: 15px;">基操</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 12.5px;">基础</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" style="font-size: 15px;">小知识</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 15px;">小程序</a> <a href="/tags/%E5%B8%B8%E7%94%A8/" style="font-size: 10px;">常用</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;">插件</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF/" style="font-size: 10px;">服务端</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E6%AD%A3%E5%88%99/" style="font-size: 12.5px;">正则</a> <a href="/tags/%E7%94%B5%E8%84%91/" style="font-size: 12.5px;">电脑</a> <a href="/tags/%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C/" style="font-size: 12.5px;">电脑操作</a> <a href="/tags/%E7%9B%B4%E6%92%AD/" style="font-size: 10px;">直播</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/" style="font-size: 12.5px;">移动端</a> <a href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9/" style="font-size: 10px;">第三方</a> <a href="/tags/%E7%BB%84%E4%BB%B6/" style="font-size: 12.5px;">组件</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E7%AB%AF/" style="font-size: 10px;">网页端</a> <a href="/tags/%E8%A7%86%E9%A2%91/" style="font-size: 10px;">视频</a> <a href="/tags/%E8%AF%AD%E6%B3%95/" style="font-size: 12.5px;">语法</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 17.5px;">配置</a> <a href="/tags/%E9%AD%94%E6%94%B9/" style="font-size: 10px;">魔改</a>
+                    </div>
+                </section>
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">在程序员的道路上,让人头秃,web前端开发工程师。现于合肥工作想有所成长发展</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/works">作品展示</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=JB0QFBEcFRwdEmRVVQpHS0k" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/luuman" title="github">github</a>
+                    
+                        <a class="QQ" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=940581896&site=qq&menu=yes" title="QQ">QQ</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-angular学习-2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/" class="article-date">
+      <time datetime="2021-03-25T02:06:09.000Z" itemprop="datePublished">2021-03-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      angular学习-2
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/" rel="tag">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>angular学习的第二课</p>
+<a id="more"></a>
+<p>一. 理解数据的双向绑定<br>在*.component.ts中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Component, OnInit &#125; from &#39;@angular&#x2F;core&#39;;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    selector: &#39;app-stock-item&#39;,</span><br><span class="line">    templateUrl: &#39;.&#x2F;stock-item.component.html&#39;,</span><br><span class="line">    styleUrls: [&#39;.&#x2F;stock-item.component.scss&#39;]</span><br><span class="line">&#125;)</span><br><span class="line">&#x2F;** 在 export class StockItemComponent implements OnInit中</span><br><span class="line">*   实现Angular的OnInit接口，这个接口允许我们在组件被初始化的时候进行一些处理</span><br><span class="line">*&#x2F;</span><br><span class="line">export class StockItemComponent implements OnInit &#123;</span><br><span class="line">    &#x2F;&#x2F; 定义几个字段都能在html里访问到</span><br><span class="line">    public name:string;</span><br><span class="line">    public code:string;</span><br><span class="line">    public price:number;</span><br><span class="line">    public previousPrice:number;</span><br><span class="line">    public previousChange:boolean;</span><br><span class="line">    constructor() &#123; &#125;</span><br><span class="line">    &#x2F;&#x2F; 函数ngOnInit会在组件初始化的时候触发</span><br><span class="line">    ngOnInit(): void &#123;</span><br><span class="line">        &#x2F;&#x2F;初始化每个字段</span><br><span class="line">        this.name&#x3D;&#39;a111&#39;;</span><br><span class="line">        this.code&#x3D;&#39;Tsc&#39;;</span><br><span class="line">        this.price&#x3D;85;</span><br><span class="line">        this.previousPrice&#x3D;80;</span><br><span class="line">        this.previousChange&#x3D; this.price&gt;&#x3D;this.previousPrice</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在html结构中 当previousChange为ture的时候class就会修改页面的三元判断就会执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .red&#123;</span><br><span class="line">        color: red;        </span><br><span class="line">    &#125;</span><br><span class="line">    .yellow&#123;</span><br><span class="line">        color: yellow;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line">&lt;div&gt;&lt;span [class]&#x3D;&quot;previousChange?&#39;red&#39;:&#39;yellow&#39;&quot;&gt;我的颜色&lt;&#x2F;span&gt;&#123;&#123;name&#125;&#125;&#123;&#123;code&#125;&#125;&#123;&#123;price&#125;&#125;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>点击事件的绑定页面中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .red&#123;</span><br><span class="line">        color: red;        </span><br><span class="line">    &#125;</span><br><span class="line">    .yellow&#123;</span><br><span class="line">        color: yellow;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br><span class="line">&lt;!--这里要注意如果没传参得这样changeColor()和vue有区别--&gt;</span><br><span class="line">&lt;!--有时候我们也许用到需要知道点击事件这个dom节点问题我们就使用&#96;$event&#96;来解决--&gt;</span><br><span class="line">&lt;div (click)&#x3D;&quot;changeOver($event)&quot;&gt;按钮&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;&lt;span [class]&#x3D;&quot;previousChange?&#39;red&#39;:&#39;yellow&#39;&quot; (click)&#x3D;&quot;changeColor(1)&quot;&gt;我的颜色&lt;&#x2F;span&gt;&#123;&#123;name&#125;&#125;&#123;&#123;code&#125;&#125;&#123;&#123;price&#125;&#125;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>ts文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Component, OnInit &#125; from &#39;@angular&#x2F;core&#39;;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    selector: &#39;app-stock-item&#39;,</span><br><span class="line">    templateUrl: &#39;.&#x2F;stock-item.component.html&#39;,</span><br><span class="line">    styleUrls: [&#39;.&#x2F;stock-item.component.scss&#39;]</span><br><span class="line">&#125;)</span><br><span class="line">&#x2F;** 在 export class StockItemComponent implements OnInit中</span><br><span class="line">*   实现Angular的OnInit接口，这个接口允许我们在组件被初始化的时候进行一些处理</span><br><span class="line">*&#x2F;</span><br><span class="line">export class StockItemComponent implements OnInit &#123;</span><br><span class="line">    &#x2F;&#x2F; 定义几个字段都能在html里访问到</span><br><span class="line">    public name:string;</span><br><span class="line">    public code:string;</span><br><span class="line">    public price:number;</span><br><span class="line">    public previousPrice:number;</span><br><span class="line">    public previousChange:boolean;</span><br><span class="line">    constructor() &#123; &#125;</span><br><span class="line">    &#x2F;&#x2F; 函数ngOnInit会在组件初始化的时候触发</span><br><span class="line">    ngOnInit(): void &#123;</span><br><span class="line">        &#x2F;&#x2F;初始化每个字段</span><br><span class="line">        this.name&#x3D;&#39;a111&#39;;</span><br><span class="line">        this.code&#x3D;&#39;Tsc&#39;;</span><br><span class="line">        this.price&#x3D;85;</span><br><span class="line">        this.previousPrice&#x3D;80;</span><br><span class="line">        this.previousChange&#x3D; this.price&gt;&#x3D;this.previousPrice</span><br><span class="line">    &#125;</span><br><span class="line">    changeOver(e)&#123;</span><br><span class="line">        console.log(e)        </span><br><span class="line">    &#125;   </span><br><span class="line">    changeColor(e)&#123;</span><br><span class="line">        alert(e)</span><br><span class="line">        this.previousChange&#x3D;!this.previousChange</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二. 使用模型让代码更加清晰，<br>我们在ts中我们要做的是定义一个接口或一个类在我们的应用程序中始终如一的使用它，我们要在数据之外存放额外的逻辑，所以可以用类来定义<br>用cli命令快速创建一个类</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng generate class model/stock</span><br></pre></td></tr></table></figure>
+<p>在model文件夹下面建立个stock.ts的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export class Stock&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们需要在里面写入东西</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export class Stock &#123;</span><br><span class="line">  favorite:boolean&#x3D;false;</span><br><span class="line">  &#x2F;&#x2F;这里是个ts的语法糖,我们没真正的为类的属性定义name,code等变量</span><br><span class="line">  constructor(public name:string,public code:string,public price:number,public previousPrice:number)&#123;&#125;</span><br><span class="line">  previousChange():boolean&#123;</span><br><span class="line">    return  this.price&gt;&#x3D;this.previousPrice</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>拓展下关于constructor()怕忘了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let a&#x3D;&#123;a:0&#125;</span><br><span class="line">console.log(a.constructor()) &#x2F;&#x2F;&#123;&#125;</span><br><span class="line">console.log(a.constructor(a)) &#x2F;&#x2F;&#123;a:0&#125;</span><br></pre></td></tr></table></figure>
+<p>三. 内置属性和内置条件是有区别的<br>接下来说ng里的两个内置属性NgClass和NgStyle<br>在上面说的样式中说了两个class的判断如果多个判断或者要给多个样式怎么办呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">export class StockItemsComponent implements OnInit &#123;</span><br><span class="line">  public stockTwo:StockTwo</span><br><span class="line">  public stockClass</span><br><span class="line">  constructor() &#123; &#125;</span><br><span class="line">  ngOnInit(): void &#123;</span><br><span class="line">    this.stockTwo&#x3D;new StockTwo(66,)</span><br><span class="line">    this.stockClass&#x3D;&#123;</span><br><span class="line">      &quot;yellow&quot;:this.stockTwo.num&gt;this.stockTwo.number,</span><br><span class="line">      &quot;red&quot;:this.stockTwo.number&#x3D;&#x3D;this.stockTwo.num,</span><br><span class="line">      &quot;blue&quot;:this.stockTwo.number&gt;this.stockTwo.num,</span><br><span class="line">      &quot;border&quot;:this.stockTwo.state,</span><br><span class="line">      &quot;maxSize&quot;:this.stockTwo.state&amp;&amp;this.stockTwo.ifChange(),</span><br><span class="line">      &quot;minSize&quot;:!this.stockTwo.state&amp;&amp;!this.stockTwo.ifChange()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  changeNumber(e)&#123;</span><br><span class="line">    console.log(this.stockTwo.number,this.stockTwo.num)</span><br><span class="line">    if (e)&#123;</span><br><span class="line">      this.stockTwo.number&#x3D;this.stockTwo.number+1</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      this.stockTwo.number&#x3D;this.stockTwo.number-1</span><br><span class="line">    &#125;</span><br><span class="line">    this.stockClass&#x3D;&#123;</span><br><span class="line">      &quot;yellow&quot;:this.stockTwo.num&gt;this.stockTwo.number,</span><br><span class="line">      &quot;red&quot;:this.stockTwo.number&#x3D;&#x3D;this.stockTwo.num,</span><br><span class="line">      &quot;blue&quot;:this.stockTwo.number&gt;this.stockTwo.num,</span><br><span class="line">      &quot;border&quot;:this.stockTwo.state,</span><br><span class="line">      &quot;maxSize&quot;:this.stockTwo.state&amp;&amp;this.stockTwo.ifChange(),</span><br><span class="line">      &quot;minSize&quot;:!this.stockTwo.state&amp;&amp;!this.stockTwo.ifChange()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们再在stockTwo里写上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export class StockTwo &#123;</span><br><span class="line">  number:number&#x3D;66;</span><br><span class="line">  constructor(public num:Number&#x3D;66,public state:boolean&#x3D;true ) &#123;&#125;</span><br><span class="line">  ifChange()&#123;</span><br><span class="line">    return this.num&#x3D;&#x3D;this.number</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而在结构中写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p [class.yellow]&#x3D;&quot;stockTwo.state&quot; [class.maxSize]&#x3D;&quot;this.stockTwo.ifChange()&quot;&gt;stock-items works!&lt;&#x2F;p&gt;</span><br><span class="line">&lt;div [ngClass]&#x3D;&quot;stockClass&quot;&gt;</span><br><span class="line">  这是实验的块级</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;button (click)&#x3D;&quot;changeNumber(true)&quot;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button (click)&#x3D;&quot;changeNumber(false)&quot;&gt;-&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+<p>四.ng里面的内置结构指令<br>ngStyle不太想写了因为和ngClass没什么区别只是把class名字换成了样式名字，然后把里面的true：false改为样式的值<br>ng的if判断<code>*ngIf=&quot;条件&quot;</code>和vif一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div *ngif&#x3D;&quot;1&#x3D;&#x3D;2&quot;&gt;这个就不显示了&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-if&#x3D;&quot;1&#x3D;&#x3D;2&quot;&gt;这个就不显示了&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>ng的for循环是<code>*ngFor=&quot;let item of stocks;index as i&quot;</code></p>
+<blockquote>
+<p>index 引用到当前元素的index as是给他赋给i这个变量和sql查询语句差不多</p>
+</blockquote>
+<blockquote>
+<p>even index为偶数时候为true</p>
+</blockquote>
+<blockquote>
+<p>odd  index为奇数的时候为true</p>
+</blockquote>
+<blockquote>
+<p>first 第一个为true</p>
+</blockquote>
+<blockquote>
+<p>last 倒数第一个为true</p>
+</blockquote>
+<p>一般循环遍历经常使用的场景就是后端接口数据渲染，默认情况下会给每个对象以id去跟踪去删除，新增，添加修改。也就是说<br>只要对象引入没有变化angualr就不会给他创建新的元素，并重用旧的元素引用，这主要是出于性能方面的考虑，创建和删除的代价比较高<br>在ng循环里有trackBy函数函数返回值会作为他的标识符而不是object reference作为标识（在必须要删除元素的时候使用可以优化列表速度）<br>在.ts文件中写入方法</p>
+<figure class="highlight js"><figcaption><span> </span><a target="_blank" rel="noopener" href="//stock-item.component.ts">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">trackStockByCode</span>(<span class="params">index,stock</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> stock.code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在.html 里写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div *ngFor&#x3D;&quot;let item of listData;index as i;even as isEven;trackBy:trackStockByCode&quot; [class]&#x3D;&quot;isEven?&#39;red&#39;:&#39;yellow&#39;&quot;&gt;</span><br><span class="line">  &#123;&#123;item.name&#125;&#125;--- &lt;span (click)&#x3D;&quot;onListRow($event,i)&quot;&gt;&#123;&#123;i+1&#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>还有一种判断方式<code>[ngSwitch]=&#39;a.type&#39;</code>这也是种判断方式他本身不属于结构指令，他属于属性指令，<code>ngSwitchCase</code>,和<code>ngSwitchDefault</code>才是真的结构指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div [ngSwitch]&#x3D;&quot;item.type&quot;&gt;</span><br><span class="line">    &lt;stock-item *ngSwitchCase&#x3D;&quot;&#39;1&#39;&quot; [item]&#x3D;&quot;item&quot;&gt;&lt;&#x2F;stock-item&gt;</span><br><span class="line">    &lt;stock-item1 *ngSwitchCase&#x3D;&quot;&#39;2&#39;&quot; [item]&#x3D;&quot;item&quot;&gt;&lt;&#x2F;stock-item1&gt;</span><br><span class="line">    &lt;stock-item2 *ngSwitchCase&#x3D;&quot;&#39;3&#39;&quot; [item]&#x3D;&quot;item&quot;&gt;&lt;&#x2F;stock-item2&gt;</span><br><span class="line">    &lt;stock-itemNo *ngSwitchDefailt &gt;&lt;&#x2F;stock-itemNo&gt;    </span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>当你有多个组件的时候，用他很好用当type等于1的时候显示什么组件2的时候显示什么组件</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>写着玩做笔记</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">小编不易来个几毛也是钱</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/">angular学习-2</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 霖 的个人博客">霖</a></p>
+        <p><span>发布时间:</span>2021年03月25日 - 10时06分</p>
+        <p><span>最后更新:</span>2021年03月29日 - 14时25分 </p>
+<!--        <p>-->
+<!--            <span>原始链接:</span><a class="post-url" href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/" title="angular学习-2">http://example.com/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/</a>-->
+<!--            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>-->
+<!--            <script src="/js/clipboard.min.js"></script>-->
+<!--            <script> var clipboard = new Clipboard('.copy-path'); </script>-->
+<!--        </p>-->
+<!--        <p>-->
+<!--            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。-->
+<!--        </p>-->
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          angular学习-1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/17/%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">替换字符串中的空格</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-1/" title="上一篇: angular学习-1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/03/17/%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC/" title="下一篇: 替换字符串中的空格">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/03/29/angular%E5%AD%A6%E4%B9%A0-3/">angular学习3</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-1/">angular学习-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/25/angular%E5%AD%A6%E4%B9%A0-2/">angular学习-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/17/%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC/">替换字符串中的空格</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/03/17/%E6%89%8B%E6%9C%BA%E6%8B%A8%E5%8F%B7/">手机拨号</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/16/js%E6%95%B0%E5%AD%97%E7%9A%84%E5%87%BD%E6%95%B0/">js数字的函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/16/js%E4%B8%AD%E6%AD%A3%E5%88%99%E4%BD%BF%E7%94%A8/">js中正则使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/16/js%E5%AF%B9%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/">js对字符串操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/vue%E4%BF%AE%E6%94%B9title/">vue修改title</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/element%E7%9A%84%E7%9C%81%E5%B8%82%E5%8C%BA%E9%80%89%E6%8B%A9/">element的省市区选择</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/vue%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E8%B7%AF%E7%94%B1/">vue动态添加路由</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/vuex%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8/">vuex的理解和使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/element%E6%8C%87%E4%BB%A4dialog%E6%8B%96%E6%8B%BD/">element指令dialog拖拽</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/element%E6%8C%87%E4%BB%A4waves%E6%B0%B4%E6%B3%A2%E7%BA%B9%E6%95%88%E6%9E%9C/">element指令waves水波纹效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/11/el-menu%E6%8A%98%E5%8F%A0%E9%81%87%E5%88%B0%E4%B8%8D%E9%9A%90%E8%97%8F%E6%96%87%E5%AD%97%E7%9A%84%E6%83%85%E5%86%B5/">el-menu折叠遇到不隐藏文字的情况</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/25/ldltable/">ldltable</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/24/%E8%8E%B7%E5%BE%97%E8%A7%86%E9%A2%91%E6%97%B6%E9%95%BF/">获得视频时长</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/24/%E8%AE%B0%E5%BD%95%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%AF%86%E7%A0%81%E6%97%B6%E5%80%99%E7%9A%84%E6%A0%B7%E5%BC%8F%E9%97%AE%E9%A2%98/">记录浏览器自动填充密码时候的样式问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/23/uniApp%E6%BB%9A%E5%8A%A8%E5%88%B0%E5%BA%95%E9%83%A8/">uniApp滚动到底部（控制滚动条）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/04/watch%E7%9B%91%E6%8E%A7/">watch监控</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/03/element%E5%BC%B9%E7%AA%97/">element的$msgbox弹窗带图片</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/02/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%85%A5%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9B%B4%E6%92%AD/">小程序接入小程序直播</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/01/%E5%8E%BB%E6%8E%89%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/">uniapp去掉顶部导航栏</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/30/%E4%B8%83%E7%89%9B%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0/">七牛分片上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/30/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E9%94%AE%E7%9B%98%E9%A1%B6%E5%87%BA%E9%A1%B5%E9%9D%A2%E5%BC%82%E5%B8%B8/">移动端页面键盘顶出页面异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%80%8E%E4%B9%88%E9%95%BF%E4%B9%85%E8%BF%90%E8%A1%8Cnode%E9%A1%B9%E7%9B%AE/">服务器上怎么长久运行node项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/cmd%E6%93%8D%E4%BD%9C/">cmd操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E5%B8%B8%E7%94%A8%E5%8F%88%E4%B8%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0/">常用又不常用的函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/vue%E5%89%AA%E5%88%87%E6%9D%BF%E4%B8%80%E9%94%AE%E5%A4%8D%E5%88%B6/">vue剪切板一键复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/25/vue%E7%9A%84%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E4%B8%8D%E6%98%AF%E6%A0%B9%E7%9B%AE%E5%BD%95%E9%97%AE%E9%A2%98/">vue的打包发布不是根目录问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/18/vue%E7%88%B6%E5%AD%90%E4%BC%A0%E5%80%BC/">vue父子传值</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/win7%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%A4%B9/">电脑隐藏文件夹</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/%E5%AD%97%E4%BD%93%E8%B6%85%E5%87%BA%E9%9A%90%E8%97%8F/">字体超出隐藏</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/17/markdown%E8%AF%AD%E6%B3%95/">markdown语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/gitNew/">git的使用与命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/hexo/">新建博客-hexo搭建简单博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2/">新建博客-平台</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 LiDaoLin
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >到访人数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
